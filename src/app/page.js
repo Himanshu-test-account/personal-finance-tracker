@@ -101,6 +101,8 @@ export default function Home() {
 
   const handleDeleteTransaction = async (id) => {
     try {
+      setLoading(true); // Changed from setIsLoading to setLoading
+      
       const response = await fetch(`/api/transactions/${id}`, {
         method: 'DELETE',
       });
@@ -110,9 +112,12 @@ export default function Home() {
       }
       
       setTransactions(transactions.filter(t => t._id !== id));
+      
     } catch (err) {
       console.error('Error deleting transaction:', err);
       setError(err.message);
+    } finally {
+      setLoading(false); // Changed from setIsLoading to setLoading
     }
   };
 
